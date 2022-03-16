@@ -1,0 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Medkit : MonoBehaviour
+{
+    public int healAmount;
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            if(FindObjectOfType<PlayerHP>().health < 5)
+			{
+                FindObjectOfType<PlayerHP>().Heal(healAmount);
+                Destroy(this.gameObject);
+            }
+        }
+    }
+}
