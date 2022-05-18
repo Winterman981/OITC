@@ -21,6 +21,7 @@ public class AIController : MonoBehaviour
     public float shootForce;
     float nextShot = 0;
 
+    //public int soundID;
 
     NavMeshAgent nav;
 
@@ -50,7 +51,7 @@ public class AIController : MonoBehaviour
         //If in chase and attack range, shoot at player.
         if (seenPlayer && attacking)
 		{
-            transform.LookAt(target);
+            LookAt(target.position);
             firePoint.transform.LookAt(target);
             if (Time.time > nextShot)
             {
@@ -75,6 +76,21 @@ public class AIController : MonoBehaviour
         Bullet bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
         bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * shootForce, ForceMode.Impulse);
+
+  //      if(soundID == 1)
+		//{
+  //          FindObjectOfType<AudioManager>().Play("EnemyShoot");
+  //      }
+
+  //      if (soundID == 2)
+  //      {
+  //          FindObjectOfType<AudioManager>().Play("AutoShoot");
+  //      }
+
+  //      if (soundID == 3)
+  //      {
+  //          FindObjectOfType<AudioManager>().Play("SniperShoot");
+  //      }
     }
 
     private void OnDrawGizmosSelected()
@@ -84,5 +100,10 @@ public class AIController : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+
+    private void LookAt(Vector3 pos)
+    {
+        transform.rotation = Quaternion.LookRotation(Vector3.ProjectOnPlane(pos - transform.position, Vector3.up));
     }
 }

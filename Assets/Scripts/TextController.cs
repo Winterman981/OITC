@@ -47,6 +47,11 @@ public class TextController : MonoBehaviour
 
 	IEnumerator Text2()
 	{
+		if(text1.activeInHierarchy == true)
+		{
+			text1.gameObject.SetActive(false);
+		}
+
 		text2.gameObject.SetActive(true);
 		yield return new WaitForSeconds(5);
 		text2.gameObject.SetActive(false);
@@ -55,6 +60,16 @@ public class TextController : MonoBehaviour
 
 	IEnumerator Text3()
 	{
+		if (text1.activeInHierarchy == true)
+		{
+			text1.gameObject.SetActive(false);
+		}
+
+		if (text2.activeInHierarchy == true)
+		{
+			text2.gameObject.SetActive(false);
+		}
+
 		text3.gameObject.SetActive(true);
 		yield return new WaitForSeconds(5);
 		text3.gameObject.SetActive(false);

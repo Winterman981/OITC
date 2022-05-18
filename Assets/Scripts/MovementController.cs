@@ -67,7 +67,6 @@ public class MovementController : MonoBehaviour
         {
             isJumping = true;
             rb.velocity = Vector3.up * jumpForce;
-            isJumping = false;
         }
     }
 
@@ -78,6 +77,7 @@ public class MovementController : MonoBehaviour
 
         if (playerPosition.y >= contactPoint.y)  // If contact point is below the player. It means it should contact ground.
         {
+            //print("Collision Enter");
             isJumping = false;
         }
     }

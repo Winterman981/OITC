@@ -10,9 +10,10 @@ public class Medkit : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            if(FindObjectOfType<PlayerHP>().health < 5)
+            if(FindObjectOfType<PlayerHP>().health < 3)
 			{
                 FindObjectOfType<PlayerHP>().Heal(healAmount);
+                FindObjectOfType<AudioManager>().Play("Medkit");
                 Destroy(this.gameObject);
             }
         }

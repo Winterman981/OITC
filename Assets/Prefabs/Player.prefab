@@ -168,6 +168,9 @@ MonoBehaviour:
   firePoint: {fileID: 0}
   laser: {fileID: 2964666916786233477, guid: 62990b4c980e8874089812abe7dbb898, type: 3}
   statusUi: {fileID: 0}
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &4676593516681759770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,6 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 3
+  godMode: 0
   healthUI: {fileID: 0}
   red: {fileID: 0}
   deathScreen: {fileID: 0}

@@ -7,15 +7,20 @@ public class Shoot : MonoBehaviour
 {
     [SerializeField] private bool hasBullet;
     [SerializeField] private float cooldown;
+    public bool infiniteAmmo;
 
     [SerializeField] private GameObject firePoint;
 
     public LineRenderer laser;
 
     public TextMeshProUGUI statusUi;
+    public GameObject green;
 
     private string ready = "Ready!";
     private string charging = "Reloading...";
+
+    public LayerMask ignoreLayer;
+
 
     // Start is called before the first frame update
     void Start()
@@ -31,14 +36,15 @@ public class Shoot : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0) && hasBullet == true)
 		{
             Fire();
+            FindObjectOfType<AudioManager>().Play("PlayerShoot");
         }
     }
 
     private void Fire()
 	{
-        hasBullet = false;
-            RaycastHit hit;
-		if (UnityEngine.Physics.Raycast(firePoint.transform.position, firePoint.transform.forward, out hit, 4000))
+        RaycastHit hit;
+
+		if (UnityEngine.Physics.Raycast(firePoint.transform.position, firePoint.transform.forward, out hit, 4000, ~ignoreLayer))
 	    {
             Debug.Log(hit.transform.name);
 
@@ -47,7 +53,6 @@ public class Shoot : MonoBehaviour
             if (enemy != null)
             {
                 enemy.TakeDamage(1);
-                hasBullet = true;
             }
 
             //If not, perform reload.
@@ -69,22 +74,41 @@ public class Shoot : MonoBehaviour
 		else
 
 		{
-            StartCoroutine(StartCooldown());
-
             LineRenderer LR = Instantiate(laser, firePoint.transform.position, Quaternion.identity) as LineRenderer;
             Vector3[] LinePos = new Vector3[2];
             LinePos[0] = firePoint.transform.position;
-            LinePos[1] = firePoint.transform.forward  * 100f;
+            LinePos[1] = firePoint.transform.forward * 100f;
             LR.positionCount = 2;
             LR.SetPositions(LinePos);
+
+            StartCoroutine(StartCooldown());
         }
+	}
+
+    public void Unlimited()
+	{
+        StartCoroutine(Infinite());
 	}
 
 	IEnumerator StartCooldown()
 	{
-		statusUi.text = charging.ToString();
-		yield return new WaitForSeconds(cooldown);
-		statusUi.text = ready.ToString();
-		hasBullet = true;
+        if(infiniteAmmo == false)
+		{
+            hasBullet = false;
+            statusUi.text = charging.ToString();
+            yield return new WaitForSeconds(cooldown);
+            statusUi.text = ready.ToString();
+            hasBullet = true;
+            FindObjectOfType<AudioManager>().Play("Recharged");
+        }
 	}
+
+    IEnumerator Infinite()
+    {
+        green.gameObject.SetActive(true);
+        infiniteAmmo = true;
+        yield return new WaitForSeconds(5f);
+        infiniteAmmo = false;
+        green.gameObject.SetActive(false);
+    }
 }

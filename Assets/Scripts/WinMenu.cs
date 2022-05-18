@@ -25,10 +25,10 @@ public class WinMenu : MonoBehaviour
         Application.Quit();
     }
 
-    public void Retry()
+    public void Next()
     {
         Time.timeScale = 1;
         Cursor.visible = false;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

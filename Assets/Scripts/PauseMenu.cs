@@ -16,6 +16,8 @@ public class PauseMenu : MonoBehaviour
 	{
         moc = FindObjectOfType<MouseController>();
         sh = FindObjectOfType<Shoot>();
+
+        GamePaused = false;
 	}
 
 	void Update()
@@ -39,7 +41,7 @@ public class PauseMenu : MonoBehaviour
         GamePaused = false;
     }
 
-    void Pause()
+    public void Pause()
 	{
         Cursor.visible = true;
         moc.enabled = false;
@@ -58,5 +60,10 @@ public class PauseMenu : MonoBehaviour
 	{
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void Scenes()
+    {
+        SceneManager.LoadScene(6);
     }
 }

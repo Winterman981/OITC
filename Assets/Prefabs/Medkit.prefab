@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7960597949874829705}
   - component: {fileID: -549437143206592633}
   - component: {fileID: 5619298041576390741}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Medkit
   m_TagString: Untagged
   m_Icon: {fileID: 0}

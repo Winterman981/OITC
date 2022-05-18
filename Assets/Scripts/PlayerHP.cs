@@ -7,10 +7,12 @@ public class PlayerHP : MonoBehaviour
 {
     public int health;
     private int maxHP = 3;
+    public bool godMode;
 
     public TextMeshProUGUI healthUI;
 
     public GameObject red;
+    public GameObject yellow;
     public GameObject deathScreen;
 
     public MovementController mc;
@@ -44,7 +46,7 @@ public class PlayerHP : MonoBehaviour
 
     public void TakeDamage(int damage)
 	{
-        if(health > 0)
+        if(health > 0 && !godMode)
 		{
             StartCoroutine(FlashRed());
             health -= damage;
@@ -65,7 +67,11 @@ public class PlayerHP : MonoBehaviour
         moc.enabled = false;
         deathScreen.gameObject.SetActive(true);
         Time.timeScale = 0;
-        Debug.Log("Player is dead");
+	}
+
+    public void God()
+	{
+        StartCoroutine(Godmode());
 	}
 
     IEnumerator FlashRed()
@@ -73,5 +79,14 @@ public class PlayerHP : MonoBehaviour
         red.gameObject.SetActive(true);
         yield return new WaitForSeconds(0.2f);
         red.gameObject.SetActive(false);
+    }
+
+    IEnumerator Godmode()
+	{
+        yellow.gameObject.SetActive(true);
+        godMode = true;
+        yield return new WaitForSeconds(8f);
+        godMode = false;
+        yellow.gameObject.SetActive(false);
     }
 }
